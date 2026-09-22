@@ -1,0 +1,44 @@
+---
+title: "Penguin body mass in Python"
+author: "Taishi Huang"
+date: 2026-09-23
+---
+
+Gentoo penguins are heavier than the other two species in the Palmer Penguins data. This post checks that with pandas and a box plot.
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station Antarctica LTER. Licence: CC0.
+
+```{python}
+#| message: false
+#| warning: false
+from palmerpenguins import load_penguins
+import pandas as pd
+import altair as alt
+```
+
+```{python}
+penguins = load_penguins()
+penguins.shape
+```
+
+```{python}
+mass_by_species = (
+    penguins.groupby("species", as_index=False)["body_mass_g"]
+    .mean()
+    .round(1)
+)
+mass_by_species
+```
+
+The table is the mean body mass in grams. Gentoo is the heavy species.
+
+```{python}
+#| label: fig-penguin-mass
+#| fig-cap: "Body mass of penguins by species."
+alt.Chart(penguins.dropna(subset=["body_mass_g"])).mark_boxplot().encode(
+    x=alt.X("species:N", title="Species"),
+    y=alt.Y("body_mass_g:Q", title="Body mass (g)"),
+).properties(width=520, height=320)
+```
+
+The boxes do not overlap much. Gentoo sits well above Adelie and Chinstrap, which are close to each other.

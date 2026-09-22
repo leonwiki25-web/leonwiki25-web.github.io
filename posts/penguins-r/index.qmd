@@ -1,0 +1,41 @@
+---
+title: "Penguin body mass in R"
+author: "Taishi Huang"
+date: 2026-09-23
+---
+
+Gentoo penguins are heavier than the other two species in the Palmer Penguins data. This post checks that with dplyr and ggplot2.
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station Antarctica LTER. Licence: CC0.
+
+```{r}
+#| message: false
+#| warning: false
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+dim(penguins)
+```
+
+```{r}
+mass_by_species <- penguins |>
+  group_by(species) |>
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE), .groups = "drop")
+mass_by_species
+```
+The table is the mean body mass in grams. Gentoo is the heavy species.
+
+```{r}
+#| label: fig-penguin-mass-r
+#| fig-cap: "Body mass of penguins by species."
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(x = "Species", y = "Body mass (g)")
+```
+The boxes do not overlap much. Gentoo sits well above Adelie and Chinstrap, which are close to each other.
+
+
+
