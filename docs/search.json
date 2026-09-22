@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "posts/penguins-r/index.html",
+    "href": "posts/penguins-r/index.html",
+    "title": "Penguin body mass in R",
+    "section": "",
+    "text": "Gentoo penguins are heavier than the other two species in the Palmer Penguins data. This post checks that with dplyr and ggplot2.\nData: Palmer Penguins, Palmer Station Antarctica LTER. Licence: CC0.\n\nlibrary(palmerpenguins)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n\ndim(penguins)\n\n[1] 344   8\n\n\n\nmass_by_species &lt;- penguins |&gt;\n  group_by(species) |&gt;\n  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE), .groups = \"drop\")\nmass_by_species\n\n# A tibble: 3 × 2\n  species   mean_body_mass_g\n  &lt;fct&gt;                &lt;dbl&gt;\n1 Adelie               3701.\n2 Chinstrap            3733.\n3 Gentoo               5076.\n\n\nThe table is the mean body mass in grams. Gentoo is the heavy species.\n\nggplot(penguins, aes(x = species, y = body_mass_g)) +\n  geom_boxplot() +\n  labs(x = \"Species\", y = \"Body mass (g)\")\n\nWarning: Removed 2 rows containing non-finite outside the scale range\n(`stat_boxplot()`).\n\n\n\n\n\n\n\n\nFigure 1: Body mass of penguins by species.\n\n\n\n\n\nThe boxes do not overlap much. Gentoo sits well above Adelie and Chinstrap, which are close to each other."
+  },
+  {
     "objectID": "posts/first-weeks/index.html",
     "href": "posts/first-weeks/index.html",
     "title": "My first weeks in MDS",
@@ -11,7 +18,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 9, 2026\n\n\nTaishi Huang\n\n\n\n\n\nNo matching items"
+    "text": "Penguin body mass in Python\n\n\n\n\n\n\n\n\nSep 23, 2026\n\n\nTaishi Huang\n\n\n\n\n\n\n\n\n\n\n\n\nPenguin body mass in R\n\n\n\n\n\n\n\n\nSep 23, 2026\n\n\nTaishi Huang\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 9, 2026\n\n\nTaishi Huang\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -47,5 +54,12 @@
     "title": "Taishi Huang",
     "section": "",
     "text": "I’m originally from China. Before MDS, I spent 7 years working in Fintech data analysis across the US and China. I’ve grown especially interested in statistical inference and AI model reasoning — understanding why models make predictions, not just what they predict. I’m here to build a stronger foundation and stay at the frontier of the field."
+  },
+  {
+    "objectID": "posts/penguins-python/index.html",
+    "href": "posts/penguins-python/index.html",
+    "title": "Penguin body mass in Python",
+    "section": "",
+    "text": "Gentoo penguins are heavier than the other two species in the Palmer Penguins data. This post checks that with pandas and a box plot.\nData: Palmer Penguins, Palmer Station Antarctica LTER. Licence: CC0.\n\nfrom palmerpenguins import load_penguins\nimport pandas as pd\nimport altair as alt\n\n\npenguins = load_penguins()\npenguins.shape\n\n(344, 8)\n\n\n\nmass_by_species = (\n    penguins.groupby(\"species\", as_index=False)[\"body_mass_g\"]\n    .mean()\n    .round(1)\n)\nmass_by_species\n\n\n\n\n\n\n\n\nspecies\nbody_mass_g\n\n\n\n\n0\nAdelie\n3700.7\n\n\n1\nChinstrap\n3733.1\n\n\n2\nGentoo\n5076.0\n\n\n\n\n\n\n\nThe table is the mean body mass in grams. Gentoo is the heavy species.\n\nalt.Chart(penguins.dropna(subset=[\"body_mass_g\"])).mark_boxplot().encode(\n    x=alt.X(\"species:N\", title=\"Species\"),\n    y=alt.Y(\"body_mass_g:Q\", title=\"Body mass (g)\"),\n).properties(width=520, height=320)\n\n\n\n\n\n\n\n\n\nFigure 1: Body mass of penguins by species.\n\n\n\n\nThe boxes do not overlap much. Gentoo sits well above Adelie and Chinstrap, which are close to each other."
   }
 ]
