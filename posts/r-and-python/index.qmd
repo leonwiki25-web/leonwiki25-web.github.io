@@ -1,0 +1,59 @@
+---
+title: "Penguin mass with R and Python"
+author: "Taishi Huang"
+date: 2026-09-23
+---
+
+This post runs Python and R in one document. Python computes mean body mass by species. R reads that table through `reticulate` and plots it.
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station Antarctica LTER. Licence: CC0.
+
+```{r}
+#| message: false
+#| warning: false
+library(reticulate)
+library(ggplot2)
+
+root <- Sys.getenv("QUARTO_PROJECT_ROOT")
+if (!nzchar(root)) {
+  root <- if (dir.exists("../../.venv")) {
+    normalizePath("../..")
+  } else {
+    getwd()
+  }
+}
+use_virtualenv(file.path(root, ".venv"), required = TRUE)
+```
+
+Point `reticulate` at this project's `.venv`, then compute the table in Python.
+
+```{python}
+#| message: false
+#| warning: false
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+mass_by_species = (
+    penguins.groupby("species", as_index=False)["body_mass_g"]
+    .mean()
+    .round(1)
+)
+mass_by_species
+```
+
+R reads the Python object with `py$mass_by_species`.
+
+```{r}
+mass_from_python <- py$mass_by_species
+mass_from_python
+```
+
+```{r}
+#| label: fig-mass-from-python
+#| fig-cap: "Mean body mass by species. The values were computed in Python and plotted in R."
+ggplot(mass_from_python, aes(x = species, y = body_mass_g)) +
+  geom_col() +
+  labs(x = "Species", y = "Mean body mass (g)")
+```
+
+Gentoo is the heavy species. The numbers came from pandas; the bars were drawn by ggplot2.

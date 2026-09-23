@@ -1,6 +1,6 @@
 # Taishi Huang
 
-Personal site for UBC MDS DSCI 521. Milestone 3 adds two computational posts (R and Python) and locked environments so the site can be rebuilt from a clean clone.
+Personal site for UBC MDS DSCI 521. Milestone 3 adds two computational posts (R and Python), one bonus post that passes an object between R and Python with reticulate, and locked environments so the site can be rebuilt from a clean clone.
 
 ## Prerequisites
 
@@ -41,7 +41,11 @@ uv run quarto render
 
 ## View locally
 
-The built site is in `docs/`. Open `docs/index.html` in a browser, or open `docs/posts/penguins-r/index.html` and `docs/posts/penguins-python/index.html` for the two computational posts.
+The built site is in `docs/`. Open `docs/index.html` in a browser. The computational posts are:
+
+- `docs/posts/penguins-r/index.html`
+- `docs/posts/penguins-python/index.html`
+- `docs/posts/r-and-python/index.html` (R and Python in one document)
 
 ## Data
 
