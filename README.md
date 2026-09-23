@@ -7,7 +7,7 @@ Personal site for UBC MDS DSCI 521. Milestone 3 adds two computational posts (R 
 Install these first, then clone the repository.
 
 - Quarto 1.10 (or later)
-- uv (0.12.7 )
+- uv (0.12.7)
 - R 4.6.1 (or later)
 - Git
 
